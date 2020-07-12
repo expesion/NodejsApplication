@@ -5,7 +5,7 @@ form.addEventListener('submit', logSubmit);
 function logSubmit(event) {
     event.preventDefault();
     log.textContent = `Loading...`;
-    fetch(`http://localhost:3000/weather?location=${input.value}`)
+    fetch(`/weather?location=${input.value}`)
     .then((response)=>{
         return response.json()
     }).then(data=>{

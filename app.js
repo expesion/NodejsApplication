@@ -3,7 +3,7 @@ const path = require('path');
 const hbs = require('hbs')
 
 const fetchWeather = require('./server')
- 
+const port =process.env.PORT
 
 const viewsPath = path.join(__dirname, 'templates/views')
 const partialsPath = path.join(__dirname, 'templates/partials')
@@ -40,6 +40,6 @@ app.get('/help', (req, res) => {
 app.get('*', (req, res) => {
     res.render('error', { message: 'This page cannot be found', redirect: 'about', title: 'Weather App', header: 'Welcome Welcome', name: 'thaha' })
 })
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('Server is running')
 });
