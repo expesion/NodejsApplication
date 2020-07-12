@@ -1,7 +1,7 @@
 const request = require('request');
 const yargs= require("yargs");
 
-yargs.version('1.1.0')
+yargs.version('1.1.0');
 
 /* yargs.command({
     command:'city',
