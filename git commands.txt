@@ -1,0 +1,14 @@
+//To generate ssh keygen
+ ssh-keygen -t rsa -b 4096 -C "spcocmain@gmail.com"
+//To listout contents of .ssh folder
+ls -a -l ~/.ssh
+/Run the agent 
+eval $(ssh-agent -s)
+//Adding identity to system
+ ssh-add ~/.ssh/id_rsa
+ //conatenating content of id_rsa.pub
+ cat ~/.ssh/id_rsa
+ //setting connection with github
+ ssh -T git@github.com
+//adding keys to heroku
+heroku keys:add
