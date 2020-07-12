@@ -12,3 +12,5 @@ eval $(ssh-agent -s)
  ssh -T git@github.com
 //adding keys to heroku
 heroku keys:add
+//Creating heroku app
+heroku create thaha-weatherapp
