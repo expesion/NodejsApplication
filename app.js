@@ -1,17 +1,45 @@
-const request = require('request');
-const express =require('express');
-const path =require('path');
+const express = require('express');
+const path = require('path');
+const hbs = require('hbs')
 
-const path1=path.join(__dirname+'/public')
-const port = process.env.PORT
-console.log(path1);
+const fetchWeather = require('./server')
+ 
+
+const viewsPath = path.join(__dirname, 'templates/views')
+const partialsPath = path.join(__dirname, 'templates/partials')
+
 const app = express();
-app.use(express.static(path1));
-app.get('',(res,req)=>{
-    req.send('index')
+const directory = path.join(__dirname)
+
+hbs.registerPartials(partialsPath)
+app.set('views', viewsPath)
+
+app.set('view engine', 'hbs')
+    //Static resource to serve
+app.use(express.static(directory));
+
+app.get('', (req, res) => {
+    res.render('index', { title: 'Weather App', header: 'Welcome Welcome', name: 'thaha' })
 })
-app.listen(port);
- /* const url =`http://api.weatherstack.com/current?access_key=0274be5cb2f9dae9e7d1560363a62b4d&query=Bangalore&units=m`;
-request({url:url,json:true},(error,response)=>{
-    console.log(`It's currently ${response.body.current.temperature} celcius and has a ${response.body.current.precip} of rain`);
-}); */ 
+app.get('/about', (req, res) => {
+    res.render('about', { title: 'mamamia', desc: 'This is a weather app', name: 'thaha' })
+})
+app.get('/weather', (req, res) => {
+    if (!req.query.location) {
+        return res.send({ error: 'Please specifiy a location' })
+    }
+    fetchWeather(req.query.location,(output)=>{
+        res.send({ location: output.location, weather: output.message })
+    })
+    
+})
+
+app.get('/help', (req, res) => {
+    res.send('help page');
+})
+app.get('*', (req, res) => {
+    res.render('error', { message: 'This page cannot be found', redirect: 'about', title: 'Weather App', header: 'Welcome Welcome', name: 'thaha' })
+})
+app.listen(3000, () => {
+    console.log('Server is running')
+});
